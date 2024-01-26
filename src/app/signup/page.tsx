@@ -26,13 +26,10 @@ export default function SignupPage() {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      if (response.data.success) {
-        router.push("/login");
-      } else {
-        alert(response.data.message);
-      }
+      console.log("Signup success", response.data);
+      router.push("/login");
     } catch (error: any) {
-      alert(error.message);
+      console.log("Signup failed", error.message);
     } finally {
       setLoading(false);
     }
@@ -64,13 +61,12 @@ export default function SignupPage() {
               <div className="mt-2">
                 <input
                   id="username"
-                  name="username"
                   type="text"
-                  autoComplete="username"
-                  required
+                  value={user.username}
                   onChange={(e) =>
                     setUser({ ...user, username: e.target.value })
                   }
+                  placeholder="username"
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -86,11 +82,10 @@ export default function SignupPage() {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
+                  type="text"
+                  value={user.email}
                   onChange={(e) => setUser({ ...user, email: e.target.value })}
+                  placeholder="email"
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -106,13 +101,12 @@ export default function SignupPage() {
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
                   type="password"
-                  autoComplete="current-password"
-                  required
+                  value={user.password}
                   onChange={(e) =>
                     setUser({ ...user, password: e.target.value })
                   }
+                  placeholder="password"
                   className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>

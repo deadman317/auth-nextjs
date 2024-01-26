@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { axios } from "axios";
+import axios from "axios";
 
 export default function LoginPage() {
   const [user, setUser] = React.useState({
@@ -10,10 +10,7 @@ export default function LoginPage() {
     email: "",
   });
 
-  const onLogin = async () => {
-    const res = await axios.post("/api/signup", user);
-    console.log(res);
-  };
+  const onLogin = async () => {};
 
   return (
     <>
