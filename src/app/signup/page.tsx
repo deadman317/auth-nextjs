@@ -1,19 +1,41 @@
 "use client";
-import React from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { axios } from "axios";
+import axios from "axios";
 
 export default function SignupPage() {
-  const [user, setUser] = React.useState({
+  const router = useRouter();
+  const [user, setUser] = useState({
     username: "",
     password: "",
     email: "",
   });
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user.username && user.password && user.email) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
 
   const onSignup = async () => {
-    const res = await axios.post("/api/signup", user);
-    console.log(res);
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/users/signup", user);
+      if (response.data.success) {
+        router.push("/login");
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error: any) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -26,7 +48,7 @@ export default function SignupPage() {
             alt="Your Company"
           /> */}
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
-            Sign up
+            {loading ? "Loading..." : "Create an account"}
           </h2>
         </div>
 
@@ -100,7 +122,10 @@ export default function SignupPage() {
               <button
                 type="submit"
                 onClick={onSignup}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={buttonDisabled}
+                className={`flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+                  buttonDisabled && "opacity-50 cursor-not-allowed"
+                }`}
               >
                 Sign up
               </button>
