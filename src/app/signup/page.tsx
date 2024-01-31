@@ -17,7 +17,7 @@ export default function SignupPage() {
       console.log(user);
       const res = await axios.post("/api/users/signup", user);
       console.log(res.data);
-      if (res.status === 201) {
+      if (res.status === 200) {
         router.push("/login");
       }
     } catch (err: any) {

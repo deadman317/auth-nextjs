@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
         message: "User created successfully",
         savedUser,
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
