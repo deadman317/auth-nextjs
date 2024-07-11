@@ -37,12 +37,9 @@ export async function POST(request: NextRequest) {
       email: user.email,
     };
 
-    var date = new Date();
-    date.setTime(date.getTime() + 30 * 1000);
-
     //create token
     const token = jwt.sign(tokenData, process.env.TOKEN_SECRET!, {
-      expiresIn: "30s",
+      expiresIn: 10,
     });
 
     const response = NextResponse.json(
